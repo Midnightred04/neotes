@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101815"><title>NEOTES</title>
+<style>
+:root{color-scheme:dark;--bg:#101815;--fg:#f2f0e8;--muted:#9da99d;--line:#39463e;--gold:#d4bb84}*{box-sizing:border-box}html,body{min-height:100%;margin:0}body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,sans-serif}.page{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;position:relative}.page:before{content:"";pointer-events:none;position:fixed;inset:20px;border:1px solid rgba(212,187,132,.15)}.mark{color:var(--gold);font-family:Georgia,serif;font-size:26px;margin-bottom:23px}h1{font-size:clamp(3.8rem,13vw,7rem);font-weight:550;letter-spacing:.13em;line-height:1;margin:0 0 20px;text-align:center;padding-left:.13em}.subtitle{font-family:Georgia,serif;font-style:italic;font-size:clamp(1.05rem,3vw,1.32rem);color:var(--muted);text-align:center;margin:0 0 54px}form{display:flex;flex-direction:column;width:min(100%,340px);gap:12px}label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c0cabf}input{width:100%;padding:17px 18px;border:1px solid var(--line);border-radius:3px;background:#19241e;color:var(--fg);font-size:16px;outline:none}input:focus{border-color:var(--gold)}button{padding:17px 20px;margin-top:8px;background:var(--gold);border:1px solid var(--gold);border-radius:3px;color:#182019;font-size:12px;letter-spacing:.18em;font-weight:700;cursor:pointer}.error{min-height:18px;margin:0;font-size:13px;color:#e3a69b;text-align:center}footer{position:absolute;bottom:44px;font-size:11px;color:#77867b;letter-spacing:.14em;text-transform:uppercase}[hidden]{display:none!important}.home{justify-content:flex-start;padding-top:60px}.home header{width:min(100%,1100px);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:20px}.wordmark{font-size:22px;font-weight:600;letter-spacing:.17em}.logout{margin:0;padding:10px 14px;background:transparent;color:var(--muted);border-color:var(--line);font-size:11px}@media(max-width:450px){.page:before{inset:12px}.subtitle{margin-bottom:42px}footer{bottom:33px}}
+</style>
+</head>
+<body>
+<main id="login" class="page"><div class="mark" aria-hidden="true">✦</div><h1>NEOTES</h1><p class="subtitle">A space to study, reflect, and grow.</p><form id="loginForm"><label for="password">Enter the group password</label><input id="password" type="password" autocomplete="off" required placeholder="Password" aria-describedby="error"><button type="submit">ENTER NEOTES →</button><p id="error" class="error" role="alert" aria-live="polite"></p></form><footer>Faith · Fellowship · Reflection</footer></main>
+<main id="home" class="page home" hidden><header><div class="wordmark">NEOTES</div><button type="button" class="logout" id="logout">LOG OUT</button></header></main>
+<script>
+// Demo only. GitHub Pages cannot securely enforce a client-side password.
+// Use a proper authentication backend before storing private group information.
+const DEMO_PASSWORD='neotes2026';
+const login=document.getElementById('login'),home=document.getElementById('home'),input=document.getElementById('password'),error=document.getElementById('error');
+function showHome(){login.hidden=true;home.hidden=false}
+function showLogin(){login.hidden=false;home.hidden=true;input.value='';error.textContent=''}
+if(sessionStorage.getItem('neotes-demo-access')==='true')showHome();
+document.getElementById('loginForm').addEventListener('submit',e=>{e.preventDefault();if(input.value===DEMO_PASSWORD){sessionStorage.setItem('neotes-demo-access','true');showHome()}else{error.textContent='Incorrect password. Please try again.';input.select()}});
+document.getElementById('logout').addEventListener('click',()=>{sessionStorage.removeItem('neotes-demo-access');showLogin();input.focus()});
+</script>
+</body>
+</html>
